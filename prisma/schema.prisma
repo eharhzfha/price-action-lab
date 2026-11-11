@@ -1,0 +1,102 @@
+// PRICE ACTION LAB — local persistence layer
+// SQLite keeps the app zero-config. JSON payloads are stored as strings
+// because Prisma's SQLite connector does not support the Json scalar.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Trade {
+  id          String    @id @default(cuid())
+  symbol      String    @default("NQ1!")
+  instrument  String    @default("NQ")
+  direction   String // LONG | SHORT
+  entryPrice  Float
+  exitPrice   Float?
+  quantity    Int
+  entryTime   DateTime
+  exitTime    DateTime?
+  stopPrice   Float?
+  targetPrice Float?
+  fees        Float     @default(0)
+  slippage    Float     @default(0)
+  pnl         Float?
+  rMultiple   Float?
+  source      String    @default("MANUAL") // BACKTEST | PAPER | LIVE | MANUAL
+  setupGrade  String?
+  notes       String?
+  tags        String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  journalEntries JournalEntry[]
+
+  @@index([entryTime])
+  @@index([source])
+}
+
+model BacktestRun {
+  id            String   @id @default(cuid())
+  name          String
+  datasetName   String
+  createdAt     DateTime @default(now())
+  configJson    String
+  metricsJson   String
+  tradesJson    String
+  equityJson    String
+  totalTrades   Int      @default(0)
+  winRate       Float    @default(0)
+  profitFactor  Float    @default(0)
+  expectancyR   Float    @default(0)
+  maxDrawdown   Float    @default(0)
+  netPnl        Float    @default(0)
+  notes         String?
+}
+
+model JournalEntry {
+  id         String   @id @default(cuid())
+  date       DateTime
+  title      String
+  content    String
+  emotion    String?
+  discipline Int      @default(3)
+  lessons    String?
+  tags       String?
+  tradeId    String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  trade Trade? @relation(fields: [tradeId], references: [id], onDelete: SetNull)
+
+  @@index([date])
+}
+
+model UserSettings {
+  id               String   @id @default("default")
+  defaultInstrument String  @default("NQ")
+  accountSize      Float    @default(100000)
+  riskPct          Float    @default(1)
+  commissionPerSide Float   @default(2.5)
+  slippageTicks    Float    @default(1)
+  observationStart String   @default("09:50")
+  observationEnd   String   @default("10:10")
+  defaultRR        Float    @default(2)
+  timezone         String   @default("America/New_York")
+  updatedAt        DateTime @updatedAt
+}
+
+model PaperAccount {
+  id              String   @id @default("default")
+  name            String   @default("Paper Account")
+  startingBalance Float    @default(100000)
+  balance         Float    @default(100000)
+  equity          Float    @default(100000)
+  stateJson       String   @default("{}")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
