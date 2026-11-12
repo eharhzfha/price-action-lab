@@ -514,10 +514,13 @@ export function PriceChart({ analysis, height = 470 }: { analysis: StrategyAnaly
   }, [drawOverlays]);
 
   return (
-    <div className="relative" style={{ height }}>
+    <div
+      className="relative h-[clamp(320px,58vh,var(--pal-chart-h))] sm:h-[var(--pal-chart-h)]"
+      style={{ "--pal-chart-h": `${height}px` } as React.CSSProperties}
+    >
       <div ref={containerRef} className="h-full w-full" />
 
-      <div className="pointer-events-none absolute left-3 top-2.5 z-10 flex flex-wrap items-center gap-x-3 gap-y-1 rounded border border-white/[0.055] bg-base-950/78 px-2.5 py-1.5 backdrop-blur-sm">
+      <div className="pointer-events-none absolute left-2 top-2 z-10 flex max-w-[calc(100%-1rem)] flex-wrap items-center gap-x-2 gap-y-1 rounded border border-white/[0.055] bg-base-950/78 px-2 py-1 backdrop-blur-sm sm:left-3 sm:top-2.5 sm:gap-x-3 sm:px-2.5 sm:py-1.5">
         <span className="text-[10px] font-semibold tracking-wide text-ink-200">NQ1!</span>
         <span className="text-[9px] text-ink-500">{timeframe}</span>
         {display ? (
@@ -526,23 +529,25 @@ export function PriceChart({ analysis, height = 470 }: { analysis: StrategyAnaly
             <LegendValue label="H" value={display.high} />
             <LegendValue label="L" value={display.low} />
             <LegendValue label="C" value={display.close} tone={display.close >= display.open ? "text-bull" : "text-bear"} />
-            <span className={cn("numeric text-[9px]", change >= 0 ? "text-bull" : "text-bear")}>
+            <span className={cn("numeric whitespace-nowrap text-[9px]", change >= 0 ? "text-bull" : "text-bear")}>
               {change >= 0 ? "+" : ""}
               {change.toFixed(2)}
             </span>
-            <span className="text-[9px] text-ink-500">Vol {Math.round(display.volume).toLocaleString()}</span>
-            <span className="text-[9px] text-ink-500">{fmtTime(Number(display.time))} ET</span>
+            <span className="hidden whitespace-nowrap text-[9px] text-ink-500 sm:inline">
+              Vol {Math.round(display.volume).toLocaleString()}
+            </span>
+            <span className="whitespace-nowrap text-[9px] text-ink-500">{fmtTime(Number(display.time))} ET</span>
           </>
         ) : (
           <span className="text-[9px] text-ink-500">Loading candles…</span>
         )}
       </div>
 
-      <div className="pointer-events-none absolute bottom-5 left-3 z-10 flex items-center gap-2 text-[8px] uppercase tracking-[0.12em] text-ink-500">
+      <div className="pointer-events-none absolute bottom-5 left-2 z-10 flex max-w-[calc(100%-1rem)] flex-wrap items-center gap-x-2 gap-y-1 text-[8px] uppercase tracking-[0.12em] text-ink-500 sm:left-3">
         <span className="h-1.5 w-3 rounded-sm bg-bull/60" /> Demand / FVG
         <span className="h-1.5 w-3 rounded-sm bg-bear/60" /> Supply / FVG
         <span className="h-1.5 w-3 rounded-sm bg-accent/60" /> Order block
-        <span className="h-1.5 w-3 rounded-sm bg-violet/60" /> Breaker
+        <span className="hidden h-1.5 w-3 rounded-sm bg-violet/60 sm:inline-block" /> <span className="hidden sm:inline">Breaker</span>
       </div>
 
       <canvas ref={overlayRef} className="pointer-events-none absolute inset-0 z-[5]" />

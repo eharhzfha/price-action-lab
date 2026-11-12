@@ -84,7 +84,7 @@ export function EnginePage() {
         subtitle="NQ / MNQ price action model · deterministic, zero look-ahead evaluation"
         icon={<Workflow />}
         action={
-          <div className="flex items-center gap-2">
+          <div className="flex w-full flex-wrap items-center justify-between gap-2 sm:w-auto sm:justify-start">
             <Badge variant={analysis?.setup.state === "TRIGGERED" ? "pass" : analysis?.setup.state === "CONTEXT_UNCLEAR" ? "wait" : "info"} dot>
               {analysis ? SETUP_STATE_LABEL[analysis.setup.state] : "LOADING"}
             </Badge>
@@ -92,7 +92,7 @@ export function EnginePage() {
           </div>
         }
       >
-        <div className="grid gap-2 md:grid-cols-3 xl:grid-cols-6">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
           {FLOW.map((stage, index) => {
             const checklistItems = analysis?.checklist ?? [];
             const matched =
@@ -131,7 +131,7 @@ export function EnginePage() {
         </div>
       </Panel>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(360px,0.8fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(360px,0.8fr)]">
         <Panel
           title="Validation tree"
           subtitle={analysis?.setup.reason ?? "Waiting for data"}
@@ -284,7 +284,7 @@ export function EnginePage() {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Panel title="Structure matrix" subtitle="Every timeframe is derived from M1 data at the cursor" icon={<Settings2 />} flush>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-[11px]">

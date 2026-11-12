@@ -210,7 +210,7 @@ export function BacktestPage() {
         />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.45fr)_minmax(330px,0.75fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1.45fr)_minmax(330px,0.75fr)]">
         <Panel
           title="Equity curve"
           subtitle={result ? `${result.days} sessions · ${result.daysEvaluated} evaluated · ${result.evaluations.toLocaleString()} strategy evaluations` : "Awaiting research run"}
@@ -306,7 +306,7 @@ export function BacktestPage() {
         </Panel>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.3fr)_minmax(340px,0.7fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1.3fr)_minmax(340px,0.7fr)]">
         <Panel
           title="Trade ledger"
           subtitle={result ? `${result.trades.length} closed trades · ${fmtMoney(result.finalBalance)} final balance` : "No result"}

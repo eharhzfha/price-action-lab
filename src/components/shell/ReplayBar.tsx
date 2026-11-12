@@ -33,9 +33,9 @@ export function ReplayBar() {
     cursor <= window.start ? 0 : cursor >= window.end ? 100 : ((cursor - window.start) / (window.end - window.start)) * 100;
 
   return (
-    <div className="z-20 shrink-0 border-t border-white/[0.06] bg-base-950/85 px-4 py-2.5 backdrop-blur-xl lg:px-6">
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5">
-        <div className="flex items-center gap-1">
+    <div className="z-20 shrink-0 border-t border-white/[0.06] bg-base-950/85 px-3 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl sm:px-4 sm:py-2.5 lg:px-6">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 sm:gap-x-4 sm:gap-y-2.5">
+        <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
           <Button
             variant="ghost"
             size="icon"
@@ -64,15 +64,15 @@ export function ReplayBar() {
           </Button>
         </div>
 
-        <div className="min-w-[118px] rounded-md border border-white/[0.07] bg-black/20 px-2.5 py-1">
+        <div className="min-w-[104px] shrink-0 rounded-md border border-white/[0.07] bg-black/20 px-2.5 py-0.5 sm:min-w-[118px] sm:py-1">
           <div className="flex items-baseline justify-between gap-2">
-            <span className="numeric text-[13px] font-semibold text-ink-100">{fmtTime(cursor, true)}</span>
+            <span className="numeric whitespace-nowrap text-[13px] font-semibold text-ink-100">{fmtTime(cursor, true)}</span>
             <span className="text-[9px] font-medium uppercase tracking-wider text-ink-500">ET</span>
           </div>
-          <div className="text-[9px] text-ink-500">{fmtLongDate(cursor)}</div>
+          <div className="hidden whitespace-nowrap text-[9px] text-ink-500 sm:block">{fmtLongDate(cursor)}</div>
         </div>
 
-        <div className="min-w-[160px] flex-1">
+        <div className="order-last w-full min-w-0 flex-none sm:order-none sm:min-w-[160px] sm:flex-1">
           <input
             aria-label="Replay time"
             type="range"
@@ -105,26 +105,28 @@ export function ReplayBar() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex w-full min-w-0 items-center gap-2 sm:w-auto sm:shrink-0">
           <Select
             value={dayKey}
             onChange={(event) => setDay(event.target.value)}
-            className="h-8 w-[132px] text-[11px]"
+            className="h-10 w-full min-w-0 flex-1 text-[16px] sm:h-8 sm:w-[132px] sm:flex-none sm:text-[11px]"
             aria-label="Trading session"
           >
             {[...days].reverse().map((day) => (
               <option key={day} value={day}>
-                {fmtDate(atNyTime(day, "12:00"))} · {day}
+                {fmtDate(atNyTime(day, "12:00"))}
               </option>
             ))}
           </Select>
 
-          <Segmented
-            size="sm"
-            value={String(speed)}
-            onChange={(value) => setSpeed(Number(value) as PlaybackSpeed)}
-            options={SPEEDS.map((value) => ({ value: String(value), label: value === 60 ? "60×" : `${value}×` }))}
-          />
+          <div className="scrollbar-none min-w-0 shrink-0 overflow-x-auto">
+            <Segmented
+              size="sm"
+              value={String(speed)}
+              onChange={(value) => setSpeed(Number(value) as PlaybackSpeed)}
+              options={SPEEDS.map((value) => ({ value: String(value), label: value === 60 ? "60×" : `${value}×` }))}
+            />
+          </div>
 
           <div className="hidden items-center gap-1.5 xl:flex">
             <Badge variant={analysis?.inWindow ? "pass" : "dark"} dot>

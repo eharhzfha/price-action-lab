@@ -140,7 +140,7 @@ export function RiskPage() {
         />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(310px,0.8fr)_minmax(0,1.35fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(310px,0.8fr)_minmax(0,1.35fr)]">
         <Panel title="Sizing inputs" subtitle="Strict NQ / MNQ contract math" icon={<Calculator />}>
           <div className="space-y-3">
             <Field label="Instrument">
@@ -202,7 +202,7 @@ export function RiskPage() {
             icon={<ShieldCheck />}
             action={<Badge variant={result.direction === "LONG" ? "bull" : result.direction === "SHORT" ? "bear" : "dark"}>{result.direction ?? "INVALID"}</Badge>}
           >
-            <div className="grid gap-3 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
               <div className="rounded-md border border-white/[0.06] bg-black/20 p-3.5">
                 <div className="micro-label">Position size</div>
                 <div className="mt-2 flex items-end gap-2">
@@ -294,9 +294,9 @@ export function RiskPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <Panel title="Account defaults" subtitle="Persisted to SQLite and used by the paper desk" icon={<Save />}>
-          <div className="grid gap-2.5 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
             <Field label="Instrument">
               <Select value={instrument} onChange={(event) => setInstrument(event.target.value as Instrument)}>
                 <option value="MNQ">MNQ</option>

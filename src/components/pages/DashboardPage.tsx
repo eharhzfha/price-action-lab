@@ -119,7 +119,7 @@ export function DashboardPage() {
         />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(360px,0.9fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(360px,0.9fr)]">
         <Panel
           title="Session brief"
           subtitle={`${analysis?.tradingDay ? fmtDate(analysis.asOf) : dayKey} · all times America/New_York`}
@@ -135,7 +135,7 @@ export function DashboardPage() {
             </div>
           }
         >
-          <div className="relative overflow-hidden rounded-md border border-white/[0.055] bg-black/20 p-4">
+          <div className="relative overflow-hidden rounded-md border border-white/[0.055] bg-black/20 p-3 sm:p-4">
             <div className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full bg-accent/[0.05] blur-2xl" />
             <div className="relative flex flex-wrap items-start justify-between gap-4">
               <div>
@@ -143,7 +143,7 @@ export function DashboardPage() {
                   <StatusDot tone="bull" pulse /> Local replay cursor
                 </div>
                 <div className="mt-2 flex items-baseline gap-2.5">
-                  <span className="numeric text-[32px] font-semibold leading-none tracking-tight text-ink-100">{fmtPrice(analysis?.price)}</span>
+                  <span className="numeric whitespace-nowrap text-[28px] font-semibold leading-none tracking-tight text-ink-100 sm:text-[32px]">{fmtPrice(analysis?.price)}</span>
                   <span className="text-[11px] text-ink-500">NQ1!</span>
                 </div>
                 <div className="mt-2 flex flex-wrap items-center gap-2 text-[10px] text-ink-500">
@@ -220,7 +220,7 @@ export function DashboardPage() {
                         item.status === "PASS" ? "bg-bull" : item.status === "FAIL" ? "bg-bear" : item.status === "WAIT" ? "bg-warn" : "bg-ink-600",
                       )}
                     />
-                    <span className="w-[124px] shrink-0 truncate text-[10px] text-ink-400">{item.label}</span>
+                    <span className="w-[92px] shrink-0 truncate text-[10px] text-ink-400 sm:w-[124px]">{item.label}</span>
                     <div className="h-[3px] flex-1 overflow-hidden rounded-full bg-white/[0.045]">
                       <div
                         className={cn(
@@ -269,7 +269,7 @@ export function DashboardPage() {
         <SignalTicket analysis={analysis} />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(360px,1fr)_minmax(0,1.1fr)_minmax(300px,0.85fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(360px,1fr)_minmax(0,1.1fr)_minmax(300px,0.85fr)]">
         <Panel
           title="Validation checklist"
           subtitle="Hard gates read top to bottom"
@@ -373,7 +373,7 @@ export function DashboardPage() {
         icon={<Activity />}
         action={<Badge variant={signal ? "pass" : "wait"} dot>{signal ? "TRADE AUTHORIZED" : "NO TRADE"}</Badge>}
       >
-        <div className="grid gap-3 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           <div className="rounded-md border border-white/[0.055] bg-black/20 p-3">
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-3.5 w-3.5 text-bull" />

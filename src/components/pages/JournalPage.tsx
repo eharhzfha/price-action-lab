@@ -210,20 +210,24 @@ export function JournalPage() {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <div className="relative min-w-[220px] flex-1">
+        <div className="relative w-full min-w-0 flex-1 basis-full sm:basis-auto sm:min-w-[220px]">
           <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-500" />
           <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search title, content or tags…" className="pl-8" />
         </div>
-        <div className="flex items-center gap-1.5">
-          <Filter className="h-3 w-3 text-ink-500" />
-          <Select value={emotionFilter} onChange={(event) => setEmotionFilter(event.target.value)} className="h-9 w-[142px] text-[11px]">
+        <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:flex-none">
+          <Filter className="h-3 w-3 shrink-0 text-ink-500" />
+          <Select
+            value={emotionFilter}
+            onChange={(event) => setEmotionFilter(event.target.value)}
+            className="h-10 w-full text-[16px] sm:h-9 sm:w-[142px] sm:text-[11px]"
+          >
             <option value="ALL">All emotions</option>
             {EMOTIONS.map((emotion) => (
               <option key={emotion} value={emotion}>{emotion}</option>
             ))}
           </Select>
         </div>
-        <Button onClick={openNew}>
+        <Button onClick={openNew} className="shrink-0">
           <Plus className="h-3.5 w-3.5" /> New journal entry
         </Button>
       </div>
@@ -232,7 +236,7 @@ export function JournalPage() {
         <div className="rounded-md border border-bear/20 bg-bear/[0.04] px-3 py-2 text-[11px] text-bear">{error}</div>
       )}
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(330px,0.85fr)_minmax(0,1.15fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(330px,0.85fr)_minmax(0,1.15fr)]">
         <Panel
           title="Review stream"
           subtitle={loading ? "Loading journal…" : `${filtered.length} entries`}
@@ -367,7 +371,7 @@ export function JournalPage() {
       </div>
 
       {entries.length > 0 && (
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <Panel title="Emotion distribution" subtitle="Review where execution pressure comes from" icon={<TrendingUp />}>
             <div className="space-y-2">
               {Object.entries(emotionCounts)
@@ -422,7 +426,7 @@ export function JournalPage() {
       >
         <div className="space-y-3">
           {error && <p className="rounded border border-bear/20 bg-bear/[0.04] px-2.5 py-2 text-[10px] text-bear">{error}</p>}
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
             <Field label="Date & time (ET)">
               <Input type="datetime-local" value={form.date} onChange={(event) => setForm((prev) => ({ ...prev, date: event.target.value }))} />
             </Field>
@@ -443,10 +447,10 @@ export function JournalPage() {
           <Field label="Lesson">
             <Textarea value={form.lessons} maxLength={4000} onChange={(event) => setForm((prev) => ({ ...prev, lessons: event.target.value }))} placeholder="One concrete adjustment for the next session." className="min-h-[70px]" />
           </Field>
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
             <Field label="Discipline (1–5)">
               <Segmented
-                className="h-9 w-full"
+                className="h-10 w-full sm:h-9"
                 value={String(form.discipline)}
                 onChange={(value) => setForm((prev) => ({ ...prev, discipline: Number(value) }))}
                 options={[1, 2, 3, 4, 5].map((value) => ({ value: String(value), label: String(value) }))}

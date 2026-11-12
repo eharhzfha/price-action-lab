@@ -44,18 +44,18 @@ function WorkspaceInner() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-base-950">
+    <div className="flex h-[100dvh] min-h-0 overflow-hidden bg-base-950">
       <Sidebar />
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col overflow-x-hidden">
         <TopBar />
-        <div className="scrollbar-none flex gap-1 overflow-x-auto border-b border-white/[0.055] bg-base-950/60 px-4 py-2 md:hidden">
+        <div className="scrollbar-none flex shrink-0 gap-1 overflow-x-auto border-b border-white/[0.055] bg-base-950/60 px-2 py-2 md:hidden">
           {MOBILE_TABS.map((item) => (
             <button
               key={item.key}
               type="button"
               onClick={() => setTab(item.key)}
               className={cn(
-                "shrink-0 rounded-md px-2.5 py-1 text-[11px] font-medium transition",
+                "shrink-0 whitespace-nowrap rounded-md px-2.5 py-1.5 text-[11px] font-medium transition",
                 tab === item.key ? "bg-accent/15 text-accent" : "text-ink-500 hover:text-ink-200",
               )}
             >
@@ -63,8 +63,8 @@ function WorkspaceInner() {
             </button>
           ))}
         </div>
-        <main className="min-h-0 flex-1 overflow-y-auto">
-          <div key={tab} className="animate-fadeUp px-4 py-4 lg:px-6 lg:py-5">
+        <main className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain">
+          <div key={tab} className="animate-fadeUp px-3 py-3 sm:px-4 sm:py-4 lg:px-6 lg:py-5">
             {pages[tab]}
           </div>
         </main>

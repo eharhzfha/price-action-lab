@@ -25,7 +25,7 @@ const buttonVariants = cva(
         sm: "h-8 px-2.5 text-xs",
         xs: "h-6 px-2 text-[11px]",
         lg: "h-10 px-5 text-sm",
-        icon: "h-8 w-8",
+        icon: "h-9 w-9 sm:h-8 sm:w-8",
       },
     },
     defaultVariants: { variant: "default", size: "default" },
@@ -65,26 +65,28 @@ export function Panel({
   return (
     <section className={cn("panel relative overflow-hidden rounded-lg", className)}>
       {(title || action) && (
-        <header className="flex items-center justify-between gap-3 border-b border-white/[0.055] px-4 py-3">
-          <div className="flex min-w-0 items-center gap-2.5">
+        <header className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-white/[0.055] px-3 py-2.5 sm:flex-nowrap sm:px-4 sm:py-3">
+          <div className="flex min-w-0 flex-1 items-center gap-2.5">
             {icon && <span className="text-ink-400 [&>svg]:h-3.5 [&>svg]:w-3.5">{icon}</span>}
             <div className="min-w-0">
-              <h2 className="truncate text-[12px] font-semibold uppercase tracking-[0.12em] text-ink-200">
+              <h2 className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-200 sm:text-[12px]">
                 {title}
               </h2>
-              {subtitle && <p className="mt-0.5 truncate text-[11px] text-ink-500">{subtitle}</p>}
+              {subtitle && <p className="mt-0.5 truncate text-[10px] text-ink-500 sm:text-[11px]">{subtitle}</p>}
             </div>
           </div>
-          {action && <div className="flex shrink-0 items-center gap-2">{action}</div>}
+          {action && (
+            <div className="flex w-full shrink-0 flex-wrap items-center gap-1.5 sm:w-auto sm:gap-2">{action}</div>
+          )}
         </header>
       )}
-      <div className={cn(flush ? "" : "p-4", bodyClassName)}>{children}</div>
+      <div className={cn(flush ? "" : "p-3 sm:p-4", bodyClassName)}>{children}</div>
     </section>
   );
 }
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] leading-none",
+  "inline-flex items-center gap-1 whitespace-nowrap rounded border px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] leading-none",
   {
     variants: {
       variant: {
@@ -139,7 +141,7 @@ export function Input({ className, ...props }: React.InputHTMLAttributes<HTMLInp
   return (
     <input
       className={cn(
-        "h-9 w-full rounded-md border border-white/[0.08] bg-black/25 px-3 text-[13px] text-ink-100 outline-none transition placeholder:text-ink-500 focus:border-accent/50 focus:bg-black/35 focus:ring-1 focus:ring-accent/20 disabled:opacity-50",
+        "h-10 w-full rounded-md border border-white/[0.08] bg-black/25 px-3 text-[16px] text-ink-100 outline-none transition placeholder:text-ink-500 focus:border-accent/50 focus:bg-black/35 focus:ring-1 focus:ring-accent/20 disabled:opacity-50 sm:h-9 sm:text-[13px]",
         className,
       )}
       {...props}
@@ -151,7 +153,7 @@ export function Textarea({ className, ...props }: React.TextareaHTMLAttributes<H
   return (
     <textarea
       className={cn(
-        "min-h-[84px] w-full resize-y rounded-md border border-white/[0.08] bg-black/25 px-3 py-2 text-[13px] leading-relaxed text-ink-100 outline-none transition placeholder:text-ink-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/20",
+        "min-h-[84px] w-full resize-y rounded-md border border-white/[0.08] bg-black/25 px-3 py-2 text-[16px] leading-relaxed text-ink-100 outline-none transition placeholder:text-ink-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/20 sm:text-[13px]",
         className,
       )}
       {...props}
@@ -163,7 +165,7 @@ export function Select({ className, children, ...props }: React.SelectHTMLAttrib
   return (
     <select
       className={cn(
-        "h-9 w-full appearance-none rounded-md border border-white/[0.08] bg-black/25 px-3 pr-8 text-[13px] text-ink-100 outline-none transition focus:border-accent/50 focus:ring-1 focus:ring-accent/20",
+        "h-10 w-full appearance-none rounded-md border border-white/[0.08] bg-black/25 px-3 pr-8 text-[16px] text-ink-100 outline-none transition focus:border-accent/50 focus:ring-1 focus:ring-accent/20 sm:h-9 sm:text-[13px]",
         "bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%237f8b97%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[position:right_10px_center] bg-no-repeat",
         className,
       )}
@@ -188,7 +190,7 @@ export function Field({
   right?: React.ReactNode;
 }) {
   return (
-    <label className={cn("block", className)}>
+    <label className={cn("block min-w-0", className)}>
       <span className="mb-1.5 flex items-center justify-between">
         <span className="micro-label">{label}</span>
         {right}
@@ -222,13 +224,20 @@ export function Metric({
     default: "text-ink-100",
   }[tone ?? "default"];
   return (
-    <div className={cn("panel relative rounded-lg px-4 py-3.5", className)}>
+    <div className={cn("panel relative rounded-lg px-3 py-2.5 sm:px-4 sm:py-3.5", className)}>
       <div className="flex items-center justify-between gap-2">
         <span className="micro-label">{label}</span>
-        {icon && <span className="text-ink-500 [&>svg]:h-3.5 [&>svg]:w-3.5">{icon}</span>}
+        {icon && <span className="shrink-0 text-ink-500 [&>svg]:h-3.5 [&>svg]:w-3.5">{icon}</span>}
       </div>
-      <div className={cn("numeric mt-2 text-[22px] font-semibold leading-none tracking-tight", toneClass)}>{value}</div>
-      {sub && <div className="mt-1.5 text-[11px] leading-tight text-ink-400">{sub}</div>}
+      <div
+        className={cn(
+          "numeric mt-2 whitespace-nowrap text-[18px] font-semibold leading-none tracking-tight sm:text-[22px]",
+          toneClass,
+        )}
+      >
+        {value}
+      </div>
+      {sub && <div className="mt-1.5 text-[10px] leading-tight text-ink-400 sm:text-[11px]">{sub}</div>}
     </div>
   );
 }
@@ -293,7 +302,7 @@ export function Toggle({
   className?: string;
 }) {
   return (
-    <label className={cn("inline-flex cursor-pointer select-none items-center gap-2 text-[11px] text-ink-400", className)}>
+    <label className={cn("inline-flex cursor-pointer select-none items-center gap-2 py-0.5 text-[11px] text-ink-400 sm:py-0", className)}>
       <button
         type="button"
         role="switch"
@@ -361,15 +370,15 @@ export function Modal({
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/70 backdrop-blur-[2px] data-[state=open]:animate-fadeUp" />
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/70 backdrop-blur-[2px] data-[state=open]:animate-fadeIn" />
         <DialogPrimitive.Content
           className={cn(
-            "fixed left-1/2 top-1/2 z-50 max-h-[88vh] w-[94vw] max-w-xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-white/10 bg-base-850 shadow-2xl outline-none data-[state=open]:animate-fadeUp",
+            "fixed left-1/2 top-1/2 z-50 max-h-[90dvh] w-[calc(100vw-1.5rem)] max-w-xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-white/10 bg-base-850 shadow-2xl outline-none data-[state=open]:animate-dialogIn sm:w-[94vw]",
             className,
           )}
         >
-          <div className="flex items-start justify-between gap-4 border-b border-white/[0.07] px-5 py-4">
-            <div>
+          <div className="flex items-start justify-between gap-4 border-b border-white/[0.07] px-4 py-3 sm:px-5 sm:py-4">
+            <div className="min-w-0">
               <DialogPrimitive.Title className="text-sm font-semibold text-ink-100">{title}</DialogPrimitive.Title>
               {description && (
                 <DialogPrimitive.Description className="mt-1 text-[11px] leading-relaxed text-ink-500">
@@ -377,12 +386,16 @@ export function Modal({
                 </DialogPrimitive.Description>
               )}
             </div>
-            <DialogPrimitive.Close className="rounded p-1 text-ink-500 transition hover:bg-white/5 hover:text-ink-200">
+            <DialogPrimitive.Close className="shrink-0 rounded p-1 text-ink-500 transition hover:bg-white/5 hover:text-ink-200">
               <X className="h-4 w-4" />
             </DialogPrimitive.Close>
           </div>
-          <div className="max-h-[65vh] overflow-y-auto px-5 py-4">{children}</div>
-          {footer && <div className="flex justify-end gap-2 border-t border-white/[0.07] px-5 py-3.5">{footer}</div>}
+          <div className="max-h-[60dvh] overflow-y-auto px-4 py-4 sm:max-h-[65vh] sm:px-5">{children}</div>
+          {footer && (
+            <div className="flex flex-wrap justify-end gap-2 border-t border-white/[0.07] px-4 py-3 sm:px-5 sm:py-3.5">
+              {footer}
+            </div>
+          )}
         </DialogPrimitive.Content>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
@@ -391,8 +404,8 @@ export function Modal({
 
 export function TableShell({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("overflow-x-auto", className)}>
-      <table className="w-full border-collapse text-left text-[12px]">{children}</table>
+    <div className={cn("-mx-px overflow-x-auto overscroll-x-contain", className)}>
+      <table className="w-full min-w-[560px] border-collapse text-left text-[12px]">{children}</table>
     </div>
   );
 }
@@ -401,7 +414,7 @@ export function Th({ children, className }: { children?: React.ReactNode; classN
   return (
     <th
       className={cn(
-        "border-b border-white/[0.06] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-500",
+        "whitespace-nowrap border-b border-white/[0.06] px-2.5 py-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-500 sm:px-3",
         className,
       )}
     >
@@ -411,5 +424,9 @@ export function Th({ children, className }: { children?: React.ReactNode; classN
 }
 
 export function Td({ children, className }: { children?: React.ReactNode; className?: string }) {
-  return <td className={cn("border-b border-white/[0.035] px-3 py-2.5 text-ink-300", className)}>{children}</td>;
+  return (
+    <td className={cn("whitespace-nowrap border-b border-white/[0.035] px-2.5 py-2.5 text-ink-300 sm:px-3", className)}>
+      {children}
+    </td>
+  );
 }

@@ -64,10 +64,20 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(6px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        dialogIn: {
+          "0%": { opacity: "0", transform: "translate(-50%, -48%) scale(0.98)" },
+          "100%": { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
+        },
       },
       animation: {
         pulseSoft: "pulseSoft 2.4s ease-in-out infinite",
         fadeUp: "fadeUp 0.3s ease-out both",
+        fadeIn: "fadeIn 0.18s ease-out both",
+        dialogIn: "dialogIn 0.18s ease-out both",
       },
     },
   },

@@ -41,15 +41,17 @@ export function TopBar() {
   const meta = TITLES[tab] ?? TITLES.dashboard;
 
   return (
-    <header className="sticky top-0 z-30 border-b border-white/[0.055] bg-base-950/80 backdrop-blur-xl">
-      <div className="flex h-[62px] items-center gap-4 px-4 lg:px-6">
+    <header className="sticky top-0 z-30 border-b border-white/[0.055] bg-base-950/80 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
+      <div className="flex h-[56px] items-center gap-2 px-3 sm:h-[62px] sm:gap-4 sm:px-4 lg:px-6">
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-ink-500">
-            <span>{meta.eyebrow}</span>
-            <span className="text-ink-600">/</span>
-            <span className="text-accent/80">v1.0</span>
+          <div className="flex min-w-0 items-center gap-2 text-[9px] font-medium uppercase tracking-[0.14em] text-ink-500 sm:text-[10px]">
+            <span className="truncate">{meta.eyebrow}</span>
+            <span className="hidden text-ink-600 sm:inline">/</span>
+            <span className="hidden shrink-0 text-accent/80 sm:inline">v1.0</span>
           </div>
-          <h1 className="mt-0.5 truncate text-[15px] font-semibold tracking-tight text-ink-100">{meta.title}</h1>
+          <h1 className="mt-0.5 truncate text-[14px] font-semibold tracking-tight text-ink-100 sm:text-[15px]">
+            {meta.title}
+          </h1>
         </div>
 
         <div className="hidden items-center gap-2 rounded-md border border-white/[0.07] bg-black/20 px-2.5 py-1.5 md:flex">
@@ -102,7 +104,7 @@ export function TopBar() {
           <div className="text-[9px] uppercase tracking-[0.14em] text-ink-500">{date} · New York</div>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
           <button
             type="button"
             title="Command palette"
@@ -126,7 +128,7 @@ export function TopBar() {
           >
             <Settings2 className="h-3.5 w-3.5" />
           </button>
-          <div className="ml-1 flex h-7 w-7 items-center justify-center rounded-md border border-white/[0.08] bg-base-700 text-[10px] font-semibold text-ink-200">
+          <div className="ml-1 hidden h-7 w-7 items-center justify-center rounded-md border border-white/[0.08] bg-base-700 text-[10px] font-semibold text-ink-200 sm:flex">
             MD
           </div>
         </div>

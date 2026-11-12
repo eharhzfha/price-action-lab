@@ -337,7 +337,7 @@ export function PaperPage() {
         <Metric label="Win rate" value={`${winRate.toFixed(1)}%`} tone="accent" icon={<History />} sub={`${wins}W / ${fills.length - wins}L · ${fmtMoney(dayRealized, { sign: true })} today`} />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(330px,0.8fr)_minmax(0,1.35fr)]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(330px,0.8fr)_minmax(0,1.35fr)]">
         <Panel
           title="Order ticket"
           subtitle={`Simulated market execution at ${fmtPrice(price)}`}
@@ -354,7 +354,7 @@ export function PaperPage() {
               </Field>
               <Field label="Direction">
                 <Segmented
-                  className="h-9 w-full"
+                  className="h-10 w-full sm:h-9"
                   value={form.direction}
                   onChange={(value) => setForm((prev) => ({ ...prev, direction: value }))}
                   options={[
@@ -365,8 +365,8 @@ export function PaperPage() {
               </Field>
             </div>
 
-            <div className="grid grid-cols-3 gap-2">
-              <Field label="Quantity">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+              <Field label="Quantity" className="col-span-2 sm:col-span-1">
                 <Input type="number" min={1} max={100} value={form.quantity} onChange={(event) => setForm((prev) => ({ ...prev, quantity: Number(event.target.value) }))} />
               </Field>
               <Field label="Stop">
@@ -384,8 +384,8 @@ export function PaperPage() {
             </div>
 
             {sizing && (
-              <div className="flex items-center justify-between rounded-md border border-white/[0.06] bg-black/20 px-2.5 py-2 text-[10px]">
-                <span className="text-ink-500">
+              <div className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-white/[0.06] bg-black/20 px-2.5 py-2 text-[10px]">
+                <span className="min-w-0 text-ink-500">
                   Risk model suggests <span className="font-semibold text-ink-200">{sizing.contracts} {instrument}</span> · {sizing.rr ?? "—"}R
                 </span>
                 <Button variant="ghost" size="xs" onClick={() => setForm((prev) => ({ ...prev, quantity: Math.max(1, sizing.contracts) }))}>
@@ -406,7 +406,7 @@ export function PaperPage() {
               </Button>
             </div>
 
-            <div className="flex items-center justify-between text-[9px] text-ink-500">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[9px] text-ink-500">
               <button type="button" className="flex items-center gap-1.5 hover:text-ink-300" onClick={() => setAutoManage((value) => !value)}>
                 <span className={cn("h-1.5 w-1.5 rounded-full", autoManage ? "bg-bull" : "bg-ink-500")} />
                 Auto-close brackets {autoManage ? "on" : "off"}
@@ -480,7 +480,7 @@ export function PaperPage() {
 
           <Panel title="Paper equity" subtitle={`${fills.length} closed simulated fills`} icon={<CircleDollarSign />}>
             <EquityCurve points={equityPoints} startingBalance={startingBalance} height={150} />
-            <div className="mt-2 grid grid-cols-4 gap-2">
+            <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
               <TicketStat label="Start" value={fmtMoney(startingBalance, { compact: true })} />
               <TicketStat label="Realized" value={fmtMoney(balance - startingBalance, { sign: true })} tone={balance >= startingBalance ? "text-bull" : "text-bear"} />
               <TicketStat label="Unrealized" value={fmtMoney(unrealizedTotal, { sign: true })} tone={unrealizedTotal >= 0 ? "text-bull" : "text-bear"} />
@@ -490,7 +490,7 @@ export function PaperPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
         <Panel title="Simulated fills" subtitle="Bracket outcomes processed in replay order" icon={<History />} flush>
           {fills.length ? (
             <div className="max-h-[300px] overflow-auto">

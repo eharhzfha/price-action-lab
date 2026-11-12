@@ -52,14 +52,23 @@ export function ChartsPage() {
             options={TIMEFRAMES.map((value) => ({ value, label: value }))}
           />
           <div className="hidden h-5 w-px bg-white/10 sm:block" />
-          <div className="flex items-center gap-2">
-            <span className={cn("numeric text-[15px] font-semibold", (analysis?.htf.bias4h.direction === "BULLISH") ? "text-bull" : analysis?.htf.bias4h.direction === "BEARISH" ? "text-bear" : "text-ink-200")}>
+          <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <span
+              className={cn(
+                "numeric whitespace-nowrap text-[15px] font-semibold",
+                analysis?.htf.bias4h.direction === "BULLISH"
+                  ? "text-bull"
+                  : analysis?.htf.bias4h.direction === "BEARISH"
+                    ? "text-bear"
+                    : "text-ink-200",
+              )}
+            >
               {fmtPrice(analysis?.price)}
             </span>
             <Badge variant="dark">{analysis?.htf.contextLabel ?? "Loading context"}</Badge>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {featured && (
             <Button variant="outline" size="sm" onClick={() => setCursor(featured)}>
               <Target className="h-3 w-3" /> Jump to signal
@@ -71,7 +80,7 @@ export function ChartsPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_330px]">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_330px]">
         <Panel
           title="NQ1! · Price action"
           subtitle={`${fmtTime(cursor, true)} ET · forming bars include data up to replay cursor`}
@@ -149,7 +158,7 @@ export function ChartsPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <Panel
           title={`${timeframe} structure events`}
           subtitle="Confirmed BOS / CHoCH pivots available at this cursor"
